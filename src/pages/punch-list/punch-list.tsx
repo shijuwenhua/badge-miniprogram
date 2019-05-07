@@ -1,8 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import './badge-list.scss'
+import './punch-list.scss'
 import TabBar from '../../components/tab-bar'
-export default class BadgeList extends Component {
+
+export default class BadgeDetail extends Component {
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -12,7 +13,7 @@ export default class BadgeList extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '我的徽章'
+    navigationBarTitleText: '徽章详情'
   }
 
   componentWillMount () { }
@@ -28,8 +29,8 @@ export default class BadgeList extends Component {
   render () {
     return (
       <View className='index'>
-        <Text>Badge</Text>
-        <TabBar currentPage="badge-list"/>
+        <Text>Punch</Text>
+        <TabBar currentPage="punch-list"/>
       </View>
     )
   }

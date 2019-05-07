@@ -20,9 +20,9 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/punch-list/punch-list',
       'pages/badge-list/badge-list',
       'pages/badge-detail/badge-detail',
-      //'pages/punch-list/punch-list'
     ],
     window: {
       backgroundTextStyle: 'light',
