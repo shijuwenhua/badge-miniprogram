@@ -2,6 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './badge-detail.scss'
 
+
 export default class BadgeDetail extends Component {
 
   /**
@@ -27,8 +28,15 @@ export default class BadgeDetail extends Component {
 
   render () {
     return (
-      <View className='index'>
-        <Text>Hello world!</Text>
+      <View className='at-row'>
+        <View className='at-col'>
+        </View>
+        <View className='at-col'>
+          <AtAvatar size='large' circle image='https://jdc.jd.com/img/200'></AtAvatar>
+        </View>
+        <View className='at-col'>
+          <AtAvatar size='large' circle image='https://jdc.jd.com/img/200'></AtAvatar>
+        </View>
       </View>
     )
   }

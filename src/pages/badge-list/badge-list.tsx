@@ -4,6 +4,7 @@ import './badge-list.scss'
 import TabBar from '../../components/tab-bar'
 import Badge from '../../components/badge'
 import { AtGrid, AtAvatar } from "taro-ui"
+
 export default class BadgeList extends Component {
 
   /**
@@ -60,10 +61,10 @@ export default class BadgeList extends Component {
           } />
           <View className='at-row'>
             <View className='at-col'>
-              <Badge></Badge>
+            <Badge complete='1' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
             </View>
             <View className='at-col'>
-              <AtAvatar size='large' circle image='https://jdc.jd.com/img/200'></AtAvatar>
+              <AtAvatar size='large' circle image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></AtAvatar>
             </View>
             <View className='at-col'>
               <AtAvatar size='large' circle image='https://jdc.jd.com/img/200'></AtAvatar>

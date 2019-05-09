@@ -1,5 +1,4 @@
 import Taro, { Component } from '@tarojs/taro'
-import PropTypes from 'prop-types'
 import { View } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
 
@@ -10,12 +9,19 @@ export default class Badge extends Component {
   handleClick (e) {
   }
   render () {
+    const {
+      size,
+      complete,
+      image
+    } = this.props
     return (
-      <View >
-        <AtAvatar size='normal' circle image='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1557336398344&di=f0886470f8fecc97247df1bda0426f11&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fc5668488597d1474422afc94912257f7495e02c816070f-mkOlwu_fw658'></AtAvatar>
+      <View className={complete==='1'?'':'badge-grey'} >
+        <AtAvatar size={size} circle image={image}></AtAvatar>
       </View>
     )
   }
 }
 Badge.defaultProps = {
+  size: 'normal',
+  complete: '1'
 }

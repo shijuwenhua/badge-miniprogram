@@ -1,7 +1,5 @@
-.at-avatar{
-    image {
-        -webkit-filter: grayscale(1); /* Webkit */
-        filter: gray; /* IE6-9 */  
-        filter: grayscale(1); /* W3C */
-    }
+.badge-grey {
+    -webkit-filter: grayscale(1); /* Webkit */
+    filter: gray; /* IE6-9 */  
+    filter: grayscale(1); /* W3C */
 }
