@@ -5,8 +5,16 @@ import TabBar from '../../components/tab-bar'
 import Badge from '../../components/badge'
 import { AtGrid, AtAvatar, AtList, AtListItem } from "taro-ui"
 import data from '../../utils/mockData'
+import mockData from '../../utils/mockData';
 
 export default class BadgeList extends Component {
+
+  constructor() {
+    super(...arguments)
+    this.state = {
+      badges: []
+    }
+  }
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -21,7 +29,11 @@ export default class BadgeList extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () { 
+    this.setState({
+      badges: mockData.badges
+    })
+  }
 
   componentWillUnmount () { }
 
@@ -30,8 +42,8 @@ export default class BadgeList extends Component {
   componentDidHide () { }
 
   render () {
+    const {badges} = this.state
     return (
-      
       <View className='index'>
         <View className='panel'>
           <View className='panel__title'>已获得徽章</View>
