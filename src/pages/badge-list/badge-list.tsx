@@ -4,6 +4,7 @@ import './badge-list.scss'
 import TabBar from '../../components/tab-bar'
 import Badge from '../../components/badge'
 import { AtGrid, AtAvatar, AtList, AtListItem } from "taro-ui"
+import data from '../../utils/mockData'
 
 export default class BadgeList extends Component {
 
