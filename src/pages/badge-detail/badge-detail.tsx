@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './badge-detail.scss'
+import Badge from '../../components/badge'
 
 
 export default class BadgeDetail extends Component {
@@ -28,15 +29,18 @@ export default class BadgeDetail extends Component {
 
   render () {
     return (
-      <View className='at-row'>
-        <View className='at-col'>
-        </View>
-        <View className='at-col'>
-          <AtAvatar size='large' circle image='https://jdc.jd.com/img/200'></AtAvatar>
-        </View>
-        <View className='at-col'>
-          <AtAvatar size='large' circle image='https://jdc.jd.com/img/200'></AtAvatar>
-        </View>
+      <View className='index'>
+          <View className='at-row'>
+            <View className='at-col'>
+              <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
+            </View>
+            <View className='at-col'>
+            <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
+            </View>
+            <View className='at-col'>
+            <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
+            </View>
+          </View>
       </View>
     )
   }
