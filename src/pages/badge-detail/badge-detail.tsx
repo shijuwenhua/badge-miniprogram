@@ -2,9 +2,15 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './badge-detail.scss'
 import Badge from '../../components/badge'
-
+import mockData from '../../utils/mockData'
 
 export default class BadgeDetail extends Component {
+  constructor() {
+    super(...arguments)
+    this.state = {
+      badge: []
+    }
+  }
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -17,7 +23,13 @@ export default class BadgeDetail extends Component {
     navigationBarTitleText: '徽章详情'
   }
 
-  componentWillMount () { }
+  componentWillMount () {
+    console.log(this.$router.params)
+    const { badge_id, activity_id } = this.$router.params
+    this.setState({
+      badge: mockData.badges.find(badge => badge.id.toString() === badge_id.toString())
+    })
+   }
 
   componentDidMount () { }
 
@@ -28,19 +40,23 @@ export default class BadgeDetail extends Component {
   componentDidHide () { }
 
   render () {
+    const {badge} = this.state
     return (
-      <View className='index'>
-          <View className='at-row'>
-            <View className='at-col'>
-              <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
-            </View>
-            <View className='at-col'>
+      <View className='panel'>
+        <View className='avatar-panel'>
+          <Badge className='avatar-panel__avatar' complete='0' size="large" image={badge.icon}></Badge>
+        </View>
+        <View className='at-row'>
+          <View className='at-col'>
             <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
-            </View>
-            <View className='at-col'>
-            <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
-            </View>
           </View>
+          <View className='at-col'>
+          <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
+          </View>
+          <View className='at-col'>
+          <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
+          </View>
+        </View>
       </View>
     )
   }
