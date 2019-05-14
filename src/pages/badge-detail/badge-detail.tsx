@@ -44,7 +44,11 @@ export default class BadgeDetail extends Component {
     return (
       <View className='panel'>
         <View className='avatar-panel'>
-          <Badge className='avatar-panel__avatar' complete='0' size="large" image={badge.icon}></Badge>
+          <View>
+            <Badge complete='0' size="large" image={badge.icon}></Badge>
+            <View className='at-article__h2'>{badge.title}</View>
+            <View className='at-article__h3'>{badge.desc}</View>
+          </View>
         </View>
         <View className='at-row'>
           <View className='at-col'>

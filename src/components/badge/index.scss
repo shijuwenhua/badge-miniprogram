@@ -1,3 +1,8 @@
+.badge-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .badge-grey {
     -webkit-filter: grayscale(1); /* Webkit */
     filter: gray; /* IE6-9 */  
