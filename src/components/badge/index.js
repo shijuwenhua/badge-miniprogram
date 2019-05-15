@@ -15,7 +15,7 @@ export default class Badge extends Component {
       image
     } = this.props
     return (
-      <View className={complete==='1'?'badge-center':'badge-grey badge-center'} >
+      <View className={complete==='complete'?'badge-center':'badge-grey badge-center'} >
         <AtAvatar size={size} circle image={image}></AtAvatar>
       </View>
     )

@@ -45,15 +45,17 @@ export default class BadgeDetail extends Component {
       <View className='panel'>
         <View className='avatar-panel'>
           <View>
-            <Badge complete='0' size="large" image={badge.icon}></Badge>
+            <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
             <View className='at-article__h2'>{badge.title}</View>
             <View className='at-article__h3'>{badge.desc}</View>
           </View>
         </View>
         <View className='at-row'>
-          <View className='at-col'>
-            <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
-          </View>
+          {badge.items.map((item) => (
+            <View className='at-col'key={item.type + item.id}>
+              <Badge complete={item.required_time === item.finished_time? 'complete':'processing'} image={item.icon}></Badge>
+            </View>
+          ))}
           <View className='at-col'>
           <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
           </View>
