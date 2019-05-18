@@ -3,6 +3,8 @@ import { View, Text } from '@tarojs/components'
 import './badge-detail.scss'
 import Badge from '../../components/badge'
 import mockData from '../../utils/mockData'
+import BadgeGrid from '../../components/badge-grid'
+import status from '../../utils/status'
 
 export default class BadgeDetail extends Component {
   constructor() {
@@ -41,6 +43,13 @@ export default class BadgeDetail extends Component {
 
   render () {
     const {badge} = this.state
+    const items = badge.items;
+    const data = items.map( item => { 
+      item['value'] = item.title;
+      item['image'] = item.icon;
+      item['status'] = item.finished_time >= item.requried_time ? status.COMPLETE: status.PROCESSING
+      return item;
+    })
     return (
       <View className='panel'>
         <View className='avatar-panel'>
@@ -50,19 +59,7 @@ export default class BadgeDetail extends Component {
             <View className='at-article__h3'>{badge.desc}</View>
           </View>
         </View>
-        <View className='at-row'>
-          {badge.items.map((item) => (
-            <View className='at-col'key={item.type + item.id}>
-              <Badge complete={item.required_time === item.finished_time? 'complete':'processing'} image={item.icon}></Badge>
-            </View>
-          ))}
-          <View className='at-col'>
-          <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
-          </View>
-          <View className='at-col'>
-          <Badge complete='0' image='https://user-images.githubusercontent.com/13499146/44632148-8a054080-a9a8-11e8-85a8-dfafd073dfdf.png'></Badge>
-          </View>
-        </View>
+        <BadgeGrid hasBorder={false} data={data}/>
       </View>
     )
   }

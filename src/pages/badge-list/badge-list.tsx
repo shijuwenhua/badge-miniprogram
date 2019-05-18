@@ -5,6 +5,7 @@ import TabBar from '../../components/tab-bar'
 import Badge from '../../components/badge'
 import { AtGrid, AtAvatar, AtList, AtListItem } from "taro-ui"
 import data from '../../utils/mockData'
+import status from '../../utils/status'
 import mockData from '../../utils/mockData';
 
 export default class BadgeList extends Component {
@@ -49,8 +50,8 @@ export default class BadgeList extends Component {
 
   render () {
     const {badges} = this.state
-    const complete_badges = badges.filter( badge => badge.status === 'complete').map( badge => { badge['value'] = badge.title; badge['image'] = badge.icon; return badge; })
-    const processing_badges = badges.filter( badge => badge.status === 'processing')
+    const complete_badges = badges.filter( badge => badge.status === status.COMPLETE).map( badge => { badge['value'] = badge.title; badge['image'] = badge.icon; return badge; })
+    const processing_badges = badges.filter( badge => badge.status === status.PROCESSING)
     return (
       <View className='index'>
         <View className='panel'>

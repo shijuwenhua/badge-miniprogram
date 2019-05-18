@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
+import status from '../../utils/status'
 
 import './index.scss'
 
@@ -15,7 +16,7 @@ export default class Badge extends Component {
       image
     } = this.props
     return (
-      <View className={complete==='complete'?'badge-center':'badge-grey badge-center'} >
+      <View className={complete===status.COMPLETE ?'badge-center':'badge-grey badge-center'} >
         <AtAvatar size={size} circle image={image}></AtAvatar>
       </View>
     )
