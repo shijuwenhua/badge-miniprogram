@@ -5,7 +5,9 @@ import Badge from '../../components/badge'
 import mockData from '../../utils/mockData'
 import BadgeGrid from '../../components/badge-grid'
 import status from '../../utils/status'
+import withLogin from '../../utils/withLogin'
 
+@withLogin()
 export default class BadgeDetail extends Component {
   constructor() {
     super(...arguments)
@@ -41,13 +43,21 @@ export default class BadgeDetail extends Component {
 
   componentDidHide () { }
 
+  handleClick(data){
+    if data.type === 'badge'{
+      Taro.navigateTo({
+        url: '../badge-detail/badge-detail?badge_id='+ data.id
+      })
+    }
+  }
+
   render () {
     const {badge} = this.state
     const items = badge.items;
     const data = items.map( item => { 
       item['value'] = item.title;
       item['image'] = item.icon;
-      item['status'] = item.finished_time >= item.requried_time ? status.COMPLETE: status.PROCESSING
+      item['status'] = item.finished_time >= item.required_time ? status.COMPLETE: status.PROCESSING
       return item;
     })
     return (
@@ -59,7 +69,7 @@ export default class BadgeDetail extends Component {
             <View className='at-article__h3'>{badge.desc}</View>
           </View>
         </View>
-        <BadgeGrid hasBorder={false} data={data}/>
+        <BadgeGrid hasBorder={false} data={data} onClick={this.handleClick.bind(this)}/>
       </View>
     )
   }

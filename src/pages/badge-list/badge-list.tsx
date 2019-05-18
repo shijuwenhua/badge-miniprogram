@@ -2,12 +2,13 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './badge-list.scss'
 import TabBar from '../../components/tab-bar'
-import Badge from '../../components/badge'
 import { AtGrid, AtAvatar, AtList, AtListItem } from "taro-ui"
 import data from '../../utils/mockData'
 import status from '../../utils/status'
 import mockData from '../../utils/mockData';
+import withLogin from '../../utils/withLogin'
 
+@withLogin()
 export default class BadgeList extends Component {
 
   constructor() {

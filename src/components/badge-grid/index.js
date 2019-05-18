@@ -13,6 +13,14 @@ export default class BadgeGrid extends Component {
   static options = {
     addGlobalClass: true
   }
+  handleClick = (item, index, row, ...arg) => {
+    const { onClick, columnNum } = this.props
+    if (_isFunction(onClick)) {
+      /* prettier-ignore */
+      const clickIndex = (row * columnNum) + index
+      onClick(item, clickIndex, ...arg)
+    }
+  }
   render () {
     const { data, mode, columnNum, hasBorder } = this.props
 
@@ -39,6 +47,7 @@ export default class BadgeGrid extends Component {
                 className={classNames(bodyClass, {
                   'at-grid-item--last': index === columnNum - 1
                 })}
+                onClick={this.handleClick.bind(this, childItem, index, i)}
                 style={{
                   flex: `0 0 ${100 / columnNum}%`
                 }}
@@ -46,7 +55,7 @@ export default class BadgeGrid extends Component {
                 <View className='at-grid-item__content'>
                   <View className='at-grid-item__content-inner'>
                     <View className={classNames('content-inner__icon','at-avatar','at-avatar--small',{
-                      'at-avatar--circle': true
+                      'at-avatar--circle': childItem.type === 'badge'
                     })}>
                       {childItem.image && (
                         <Image
