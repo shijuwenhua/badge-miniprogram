@@ -22,7 +22,7 @@ export default class BadgeGrid extends Component {
     }
   }
   render () {
-    const { data, mode, columnNum, hasBorder } = this.props
+    const { data, mode, columnNum, hasBorder, newActivity } = this.props
 
     if (Array.isArray(data) && data.length === 0) {
       return null
@@ -46,6 +46,8 @@ export default class BadgeGrid extends Component {
                 key={index}
                 className={classNames(bodyClass, {
                   'at-grid-item--last': index === columnNum - 1
+                },{
+                  'new-activity': childItem.type==='activity' && newActivity === childItem.id && childItem.activity_index == childItem.finished_time
                 })}
                 onClick={this.handleClick.bind(this, childItem, index, i)}
                 style={{
@@ -99,7 +101,8 @@ BadgeGrid.defaultProps = {
   data: [],
   columnNum: 3,
   mode: 'square',
-  hasBorder: true
+  hasBorder: true,
+  newActivity: -1
 }
 
 BadgeGrid.propTypes = {

@@ -48,6 +48,11 @@ function withLogin(lifecycle = 'willMount') {
           })
         }
       }
+
+      getUserId(){
+        return Taro.getStorageSync("userid")
+      }
+
       componentWillMount() {
         if (super.componentWillMount) {
           if (lifecycle === LIFE_CYCLE_MAP[0]) {

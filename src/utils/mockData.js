@@ -14,6 +14,7 @@ export default {
                     title: "读心经",
                     desc: "每日读心经",
                     icon: "http://img3.redocn.com/20130117/Redocn_2013011716263413.jpg",
+                    need_punch: 'true',
                     required_time: 20,
                     finished_time: 10
                 }
@@ -79,6 +80,7 @@ export default {
                     title: "读咒",
                     desc: "每日读咒",
                     icon: "http://img3.redocn.com/20130117/Redocn_2013011716263413.jpg",
+                    need_punch: 'true',
                     required_time: 3,
                     finished_time: 3
                 }
