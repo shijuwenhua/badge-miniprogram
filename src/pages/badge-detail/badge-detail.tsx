@@ -113,7 +113,7 @@ export default class BadgeDetail extends Component {
             <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
             <View className='at-article__h2'>{badge.title}</View>
             <View className='at-article__h3 last_h3'>{badge.desc}</View>
-            {punch?<AtButton onclick={this.handlePunch.bind(this,punch)}>打卡</AtButton>:""}
+            {(punch && badge.status !== status.COMPLETE)?<AtButton onclick={this.handlePunch.bind(this,punch)}>打卡</AtButton>:""}
           </View>
         </View>
         <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
