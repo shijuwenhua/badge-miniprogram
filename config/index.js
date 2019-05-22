@@ -25,6 +25,7 @@ const config = {
     }
   },
   defineConstants: {
+    BASE_URL: '"http://localhost:8080"'
   },
   copy: {
     patterns: [
