@@ -1,5 +1,6 @@
 const LIFE_CYCLE_MAP = ['willMount', 'didMount', 'didShow'];
 import Taro from '@tarojs/taro'
+import request from '../utils/requests'
 
 /**
  *
@@ -39,6 +40,17 @@ function withLogin(lifecycle = 'willMount') {
           Taro.login().then(res => {
             if (res.code) {
               console.log(res.code)
+              request.get('getOpenId?code=' + res.code).then(res => {
+                if (res.data){
+                  Taro.setStorageSync("userid", res.data)
+                }
+                else{
+                  Taro.showModal ({
+                    title: '错误',
+                    content: '未获取到用户信息'
+                  })
+                }
+              })
             }
           }).catch(error => {
             Taro.showModal ({
