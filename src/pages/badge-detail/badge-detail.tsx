@@ -6,6 +6,7 @@ import mockData from '../../utils/mockData'
 import BadgeGrid from '../../components/badge-grid'
 import status from '../../utils/status'
 import withLogin from '../../utils/withLogin'
+import request from '../../utils/requests'
 import { AtButton } from 'taro-ui';
 import _flattenDeep from 'lodash/flattenDeep'
 
@@ -60,8 +61,7 @@ export default class BadgeDetail extends Component {
     }
   }
 
-  handlePunch(activity_id){
-    const userid = this.getUserId();
+  handlePunch(activity_id){ 
     const badge = this.requestPunch(activity_id);
     this.setState({
       badge: badge,
@@ -69,6 +69,18 @@ export default class BadgeDetail extends Component {
     })
   }
   requestPunch(activity_id){
+    const userid = this.getUserId();
+    // request.get('attendActivity/' + userId + '/' + activity_id).then(res => {
+    //   if ( "successfully".includes(res.data) ) {
+        
+    //   }
+    //   else{
+    //     Taro.showModal ({
+    //       title: '错误',
+    //       content: '打卡失败'
+    //     })
+    //   }
+    // })
     let badge = mockData.badges.find( badge => {
       return badge.items.find( item => {
         item.finished_time = item.finished_time + 1;

@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components'
 import './badge-list.scss'
 import TabBar from '../../components/tab-bar'
 import { AtGrid, AtAvatar, AtList, AtListItem } from "taro-ui"
-import data from '../../utils/mockData'
+import request from '../../utils/requests'
 import status from '../../utils/status'
 import mockData from '../../utils/mockData';
 import withLogin from '../../utils/withLogin'
@@ -31,7 +31,16 @@ export default class BadgeList extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { 
+  componentDidMount () {
+    // const userid = this.getUserId();
+    // request.get('getUserBadgesDetail/' + userid).then(res => {
+    //   if (res.data){
+        
+    //   }
+    //   else{
+        
+    //   }
+    // })
     this.setState({
       badges: mockData.badges
     })
