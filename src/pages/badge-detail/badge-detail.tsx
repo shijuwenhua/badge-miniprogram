@@ -34,10 +34,26 @@ export default class BadgeDetail extends Component {
   componentWillMount () {
     console.log(this.$router.params)
     const { badge_id, activity_id } = this.$router.params
+    const user_id = this.getUserId();
     if (badge_id){
-      this.setState({
-        badge: mockData.badges.find(badge => badge.id.toString() === badge_id.toString()),
-        new_activity: -1
+      // this.setState({
+      //   badge: mockData.badges.find(badge => badge.id.toString() === badge_id.toString()),
+      //   new_activity: -1
+      // })
+      request.get('getUserBadgesDetail/' + user_id + '/' + badge_id).then(res => {
+        debugger
+        if ( res.data && res.data.hasOwnProperty("id") ) {
+          this.setState({
+            badge: res.data,
+            new_activity: -1
+          })
+        }
+        else{
+          Taro.showModal ({
+            title: '错误',
+            content: '获取badge具体信息失败'
+          })
+        }
       })
     }
     if (activity_id){
@@ -62,25 +78,29 @@ export default class BadgeDetail extends Component {
   }
 
   handlePunch(activity_id){ 
-    const badge = this.requestPunch(activity_id);
-    this.setState({
-      badge: badge,
-      new_activity: activity_id
+    const user_id = this.getUserId();
+    request.get('attendActivity/' + user_id + '/' + activity_id).then(res => {
+      debugger
+      if ( res.data && res.data.hasOwnProperty("id") ) {
+        this.setState({
+          badge: res.data,
+          new_activity: activity_id
+        })
+      }
+      else{
+        Taro.showModal ({
+          title: '错误',
+          content: '打卡失败'
+        })
+      }
     })
+  //   const badge = this.requestPunch(activity_id);
+  //   this.setState({
+  //     badge: badge,
+  //     new_activity: activity_id
+  //   })
   }
   requestPunch(activity_id){
-    const userid = this.getUserId();
-    // request.get('attendActivity/' + userId + '/' + activity_id).then(res => {
-    //   if ( "successfully".includes(res.data) ) {
-        
-    //   }
-    //   else{
-    //     Taro.showModal ({
-    //       title: '错误',
-    //       content: '打卡失败'
-    //     })
-    //   }
-    // })
     let badge = mockData.badges.find( badge => {
       return badge.items.find( item => {
         item.finished_time = item.finished_time + 1;
@@ -101,8 +121,8 @@ export default class BadgeDetail extends Component {
       if (badge_item.required_time > 1) {
         repeat_items.push(index)
       } 
-      badge_item['status'] = badge_item.finished_time >= badge_item.required_time ? status.COMPLETE: status.PROCESSING;
-      if (badge_item["need_punch"] === "true") punch = badge_item.id
+      badge_item['status'] = badge_item.attendTimes >= badge_item.requiredAttendTimes ? status.COMPLETE: status.PROCESSING;
+      if (badge_item["type"] === "scripture") punch = badge_item.id
       return badge_item;
     })
     repeat_items.forEach (repeat_index => {

@@ -7,6 +7,7 @@ import request from '../../utils/requests'
 import status from '../../utils/status'
 import mockData from '../../utils/mockData';
 import withLogin from '../../utils/withLogin'
+import badge from 'dist/npm/taro-ui/dist/weapp/components/badge';
 
 @withLogin()
 export default class BadgeList extends Component {
@@ -32,18 +33,24 @@ export default class BadgeList extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    // const userid = this.getUserId();
-    // request.get('getUserBadgesDetail/' + userid).then(res => {
-    //   if (res.data){
-        
-    //   }
-    //   else{
-        
-    //   }
-    // })
-    this.setState({
-      badges: mockData.badges
+    const userid = this.getUserId();
+    request.get('getUserBadgesDetailList/' + userid).then(res => {
+      debugger
+      if (res.data instanceof Array){
+        this.setState({
+          badges: res.data
+        })
+      }
+      else{
+        Taro.showModal ({
+          title: '错误',
+          content: '加载badge信息失败'
+        })
+      }
     })
+    // this.setState({
+    //   badges: mockData.badges
+    // })
   }
 
   componentWillUnmount () { }

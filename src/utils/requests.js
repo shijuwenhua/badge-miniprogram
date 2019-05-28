@@ -58,7 +58,11 @@ export default {
           return res.data
         }
       },
-      error(e) {
+      fail(e) {
+        Taro.showModal ({
+            title: '错误',
+            content: '网络请求出错'
+        })
         logError('api', '请求接口出现问题', e)
       }
     }
