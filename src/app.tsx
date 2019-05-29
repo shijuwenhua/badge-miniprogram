@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import BadgeList from './pages/badge-list'
+import '@tarojs/async-await'
 
 import './app.scss'
 

@@ -41,7 +41,6 @@ export default class BadgeDetail extends Component {
       //   new_activity: -1
       // })
       request.get('getUserBadgesDetail/' + user_id + '/' + badge_id).then(res => {
-        debugger
         if ( res.data && res.data.hasOwnProperty("id") ) {
           this.setState({
             badge: res.data,

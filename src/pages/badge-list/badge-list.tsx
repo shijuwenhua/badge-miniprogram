@@ -29,12 +29,9 @@ export default class BadgeList extends Component {
     navigationBarTitleText: '我的徽章'
   }
 
-  componentWillMount () { }
-
-  componentDidMount () {
+  aysnc componentWillMount () {
     const userid = this.getUserId();
     request.get('getUserBadgesDetailList/' + userid).then(res => {
-      debugger
       if (res.data instanceof Array){
         this.setState({
           badges: res.data
@@ -50,6 +47,9 @@ export default class BadgeList extends Component {
     // this.setState({
     //   badges: mockData.badges
     // })
+  }
+
+  componentDidMount () {
   }
 
   componentWillUnmount () { }

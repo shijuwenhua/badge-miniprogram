@@ -34,30 +34,30 @@ function withLogin(lifecycle = 'willMount') {
         super(props);
       }
 
-      $_autoLogin() {
+      async $_autoLogin() {
         const userid = Taro.getStorageSync("userid")
         if (!userid){
-          Taro.login().then(res => {
+          try{
+            const res = await Taro.login()
             if (res.code) {
               console.log(res.code)
-              request.get('getOpenId?code=' + res.code).then(res => {
-                if (res.data){
-                  Taro.setStorageSync("userid", res.data)
-                }
-                else{
-                  Taro.showModal ({
-                    title: '错误',
-                    content: '未获取到用户信息'
-                  })
-                }
-              })
+              const res2 = await request.get('getOpenId?code=' + res.code)
+              if (res2 && res2.data){
+                Taro.setStorageSync("userid", res2.data)
+              }
+              else{
+                Taro.showModal ({
+                  title: '错误',
+                  content: '未获取到用户信息'
+                })
+              }
             }
-          }).catch(error => {
+          }catch(error) {
             Taro.showModal ({
               title: '错误',
               content: '未获取到用户信息'
             })
-          })
+          }
         }
       }
 
@@ -65,34 +65,36 @@ function withLogin(lifecycle = 'willMount') {
         return Taro.getStorageSync("userid")
       }
 
-      componentWillMount() {
+      async componentWillMount() {
         if (super.componentWillMount) {
           if (lifecycle === LIFE_CYCLE_MAP[0]) {
-            const res = this.$_autoLogin();
-          }
-          super.componentWillMount();
+            const res = await this.$_autoLogin();
+            super.componentWillMount();
+          }    
         }
       }
 
-      componentDidMount() {
-        if (super.componentDidMount) {
-          if (lifecycle === LIFE_CYCLE_MAP[1]) {
-            const res = this.$_autoLogin();
-          }
+      // async componentDidMount() {
+      //   if (super.componentDidMount) {
+      //     if (lifecycle === LIFE_CYCLE_MAP[1]) {
+      //       const res = await this.$_autoLogin();
+      //       console.log('componentDidMount with login')
+      //       super.componentDidMount();
+      //     }
 
-          super.componentDidMount();
-        }
-      }
+      //     //super.componentDidMount();
+      //   }
+      // }
 
-      componentDidShow() {
-        if (super.componentDidShow) {
-          if (lifecycle === LIFE_CYCLE_MAP[2]) {
-            const res = this.$_autoLogin();
-          }
-
-          super.componentDidShow();
-        }
-      }
+      // async componentDidShow() {
+      //   if (super.componentDidShow) {
+      //     if (lifecycle === LIFE_CYCLE_MAP[2]) {
+      //       const res = await this.$_autoLogin();
+      //       console.log('componentDidShow with login')
+      //       super.componentDidShow();
+      //     }
+      //   }
+      // }
     }
   }
 }
