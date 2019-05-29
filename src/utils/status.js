@@ -1,4 +1,4 @@
 export default {
-    COMPLETE: "complete",
-    PROCESSING: "processing"
+    COMPLETE: "Completed",
+    PROCESSING: "Processing"
 }

@@ -56,7 +56,7 @@ export default class BadgeDetail extends Component {
               <AtListItem 
                 key={badge.id}
                 title={badge.title}
-                note={badge.desc}
+                note={badge.description}
                 arrow='right'
                 thumb={badge.icon}
                 onClick={this.handleClick.bind(this,badge)}

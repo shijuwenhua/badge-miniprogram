@@ -5,9 +5,8 @@ import TabBar from '../../components/tab-bar'
 import { AtGrid, AtAvatar, AtList, AtListItem } from "taro-ui"
 import request from '../../utils/requests'
 import status from '../../utils/status'
-import mockData from '../../utils/mockData';
+// import mockData from '../../utils/mockData';
 import withLogin from '../../utils/withLogin'
-import badge from 'dist/npm/taro-ui/dist/weapp/components/badge';
 
 @withLogin()
 export default class BadgeList extends Component {
@@ -85,7 +84,7 @@ export default class BadgeList extends Component {
               <AtListItem 
                 key={badge.id}
                 title={badge.title}
-                note={badge.desc}
+                note={badge.description}
                 arrow='right'
                 thumb={badge.icon}
                 onClick={this.handleClick.bind(this,badge)}

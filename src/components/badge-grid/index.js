@@ -47,7 +47,7 @@ export default class BadgeGrid extends Component {
                 className={classNames(bodyClass, {
                   'at-grid-item--last': index === columnNum - 1
                 },{
-                  'new-activity': childItem.type==='activity' && newActivity === childItem.id && childItem.activity_index == childItem.finished_time
+                  'new-activity': childItem.prop==='activity' && newActivity === childItem.id && childItem.activity_index == childItem.attendTimes
                 })}
                 onClick={this.handleClick.bind(this, childItem, index, i)}
                 style={{
@@ -57,7 +57,7 @@ export default class BadgeGrid extends Component {
                 <View className='at-grid-item__content'>
                   <View className='at-grid-item__content-inner'>
                     <View className={classNames('content-inner__icon','at-avatar','at-avatar--small',{
-                      'at-avatar--circle': childItem.type === 'badge'
+                      'at-avatar--circle': childItem.prop === 'badge'
                     })}>
                       {childItem.image && (
                         <Image

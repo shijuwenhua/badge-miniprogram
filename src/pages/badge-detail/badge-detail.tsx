@@ -132,7 +132,7 @@ export default class BadgeDetail extends Component {
       for (var i=1; i<=repeat_times; i++){
         let each_repeat_item = Object.assign({}, repeat_item);
         each_repeat_item['activity_index'] = i
-        each_repeat_item['status'] = repeat_item.finished_time >= i ? status.COMPLETE: status.PROCESSING;
+        each_repeat_item['status'] = repeat_item.attendTimes >= i ? status.COMPLETE: status.PROCESSING;
         replace_items.push(each_repeat_item)
       }
       data.splice(repeat_index,1,replace_items);
@@ -144,7 +144,7 @@ export default class BadgeDetail extends Component {
           <View>
             <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
             <View className='at-article__h2'>{badge.title}</View>
-            <View className='at-article__h3 last_h3'>{badge.desc}</View>
+            <View className='at-article__h3 last_h3'>{badge.description}</View>
             {(punch && badge.status !== status.COMPLETE)?<AtButton onclick={this.handlePunch.bind(this,punch)}>打卡</AtButton>:""}
           </View>
         </View>
