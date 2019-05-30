@@ -31,7 +31,7 @@ export default class BadgeDetail extends Component {
     navigationBarTitleText: '徽章详情'
   }
 
-  componentWillMount () {
+  async componentWillMount () {
     console.log(this.$router.params)
     const { badge_id, activity_id } = this.$router.params
     const user_id = this.getUserId();
@@ -79,7 +79,6 @@ export default class BadgeDetail extends Component {
   handlePunch(activity_id){ 
     const user_id = this.getUserId();
     request.get('attendActivity/' + user_id + '/' + activity_id).then(res => {
-      debugger
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           badge: res.data,
@@ -99,19 +98,20 @@ export default class BadgeDetail extends Component {
   //     new_activity: activity_id
   //   })
   }
-  requestPunch(activity_id){
-    let badge = mockData.badges.find( badge => {
-      return badge.items.find( item => {
-        item.finished_time = item.finished_time + 1;
-        return item.type==='activity' && item.id === activity_id;
-      })
-    });
-    return badge;
-  }
+  // requestPunch(activity_id){
+  //   let badge = mockData.badges.find( badge => {
+  //     return badge.items.find( item => {
+  //       item.finished_time = item.finished_time + 1;
+  //       return item.type==='activity' && item.id === activity_id;
+  //     })
+  //   });
+  //   return badge;
+  // }
 
   render () {
     const {badge,new_activity} = this.state
-    const activity_list = badge.map( activity_item => { 
+    const activity_list = badge["userActivityList"]
+    activity_list.map( activity_item => { 
       activity_item['prop'] = 'activity';
       return activity_item;
     })
@@ -126,7 +126,7 @@ export default class BadgeDetail extends Component {
     let data = items.map( (badge_item, index) => { 
       badge_item['value'] = badge_item.title;
       badge_item['image'] = badge_item.icon;
-      if (badge_item.required_time > 1) {
+      if (badge_item.requiredAttendTimes > 1) {
         repeat_items.push(index)
       } 
       badge_item['status'] = badge_item.attendTimes >= badge_item.requiredAttendTimes ? status.COMPLETE: status.PROCESSING;
@@ -135,7 +135,7 @@ export default class BadgeDetail extends Component {
     })
     repeat_items.forEach (repeat_index => {
       const repeat_item = data[repeat_index];
-      const repeat_times = repeat_item.required_time;
+      const repeat_times = repeat_item.requiredAttendTimes;
       let replace_items = [];
       for (var i=1; i<=repeat_times; i++){
         let each_repeat_item = Object.assign({}, repeat_item);
