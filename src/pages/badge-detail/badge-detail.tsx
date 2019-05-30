@@ -111,7 +111,16 @@ export default class BadgeDetail extends Component {
 
   render () {
     const {badge,new_activity} = this.state
-    const items = badge.items;
+    const activity_list = badge.map( activity_item => { 
+      activity_item['prop'] = 'activity';
+      return activity_item;
+    })
+    const sub_badge_list = badge["badgeList"]
+    sub_badge_list.map( sub_badge_list_item => { 
+      sub_badge_list_item['prop'] = 'badge';
+      return sub_badge_list_item;
+    })
+    const items = activity_list.concat(sub_badge_list);
     let punch = false;
     let repeat_items = [];
     let data = items.map( (badge_item, index) => { 
