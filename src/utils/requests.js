@@ -46,19 +46,33 @@ export default {
       method: method,
       header: { 'content-type': contentType, /*'token': "aa"*/ },
       success(res) {
-        if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
-          return logError('api', '请求资源不存在')
-        } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
-          return logError('api', '服务端出现了问题')
-        } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
-          return logError('api', '没有权限访问')
-        } else if (res.statusCode === HTTP_STATUS.AUTHENTICATE) {
-          Taro.navigateTo({url: '/pages/login/login'})
-        } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
+        if (res.statusCode === HTTP_STATUS.SUCCESS) {
           return res.data
         }
+        let msg = ''
+        if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
+          msg = '请求资源不存在'
+        } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
+          msg = '服务端出现了问题'
+        } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
+          msg = '没有权限访问'
+        } else if (res.statusCode === HTTP_STATUS.CLIENT_ERROR) {
+          msg = '程序出错'
+        } else if (res.statusCode === HTTP_STATUS.AUTHENTICATE) {
+          msg = '没有认证'
+          Taro.navigateTo({url: '/pages/login/login'})
+        }
+        Taro.showModal ({
+          title: '错误',
+          content: msg
+        })
+        logError('api', msg)
       },
-      error(e) {
+      fail(e) {
+        Taro.showModal ({
+            title: '错误',
+            content: '网络请求出错'
+        })
         logError('api', '请求接口出现问题', e)
       }
     }

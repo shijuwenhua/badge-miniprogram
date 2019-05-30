@@ -1,0 +1,23 @@
+
+.avatar-panel{
+  width: 100vw;
+  height: 60vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  &__avatar{
+    margin:0 auto;
+  }
+  .at-article__h3 {
+    margin-bottom: 25rpx;
+  }
+}
+
+.at-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}

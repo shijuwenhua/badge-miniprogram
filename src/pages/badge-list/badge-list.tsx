@@ -3,9 +3,9 @@ import { View, Text } from '@tarojs/components'
 import './badge-list.scss'
 import TabBar from '../../components/tab-bar'
 import { AtGrid, AtAvatar, AtList, AtListItem } from "taro-ui"
-import data from '../../utils/mockData'
+import request from '../../utils/requests'
 import status from '../../utils/status'
-import mockData from '../../utils/mockData';
+// import mockData from '../../utils/mockData';
 import withLogin from '../../utils/withLogin'
 
 @withLogin()
@@ -29,12 +29,29 @@ export default class BadgeList extends Component {
     navigationBarTitleText: '我的徽章'
   }
 
-  componentWillMount () { }
-
-  componentDidMount () { 
-    this.setState({
-      badges: mockData.badges
+  aysnc componentWillMount () {
+    console.log("componentWillMount");
+    const userid = this.getUserId();
+    console.log("userid in componentWillMount " + userid)
+    request.get('getUserBadgesDetailList/' + userid).then(res => {
+      if (res.data instanceof Array){
+        this.setState({
+          badges: res.data
+        })
+      }
+      else{
+        Taro.showModal ({
+          title: '错误',
+          content: '加载badge信息失败'
+        })
+      }
     })
+    // this.setState({
+    //   badges: mockData.badges
+    // })
+  }
+
+  componentDidMount () {
   }
 
   componentWillUnmount () { }
@@ -69,7 +86,7 @@ export default class BadgeList extends Component {
               <AtListItem 
                 key={badge.id}
                 title={badge.title}
-                note={badge.desc}
+                note={badge.description}
                 arrow='right'
                 thumb={badge.icon}
                 onClick={this.handleClick.bind(this,badge)}
