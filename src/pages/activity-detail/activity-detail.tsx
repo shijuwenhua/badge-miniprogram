@@ -71,7 +71,7 @@ export default class BadgeDetail extends Component {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           activity: this.loadActivityfromBadge(res.data, activity.id),
-          new_activity: activity.id
+          new_activity: activity.attendTimes
         })
       }
       else{
@@ -111,7 +111,7 @@ export default class BadgeDetail extends Component {
       }
       for (var i=1; i<=activity.requiredAttendTimes; i++){
         let each_repeat_item = Object.assign({}, activity);
-        each_repeat_item['activity_index'] = i
+        each_repeat_item['id'] = i
         each_repeat_item['status'] = activity.attendTimes >= i ? status.COMPLETE: status.PROCESSING;
         repeat_items.push(each_repeat_item)
       }

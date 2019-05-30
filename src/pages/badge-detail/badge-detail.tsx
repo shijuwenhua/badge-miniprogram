@@ -83,6 +83,25 @@ export default class BadgeDetail extends Component {
     }
   }
 
+  handlePunch(activity_id){ 
+    const user_id = this.getUserId();
+    request.get('attendActivity/' + user_id + '/' + activity_id).then(res => {
+      if ( res.data && res.data.hasOwnProperty("id") ) {
+        this.setState({
+          badge: res.data,
+          new_activity: activity_id
+        })
+      }
+      else{
+        Taro.showModal ({
+          title: '错误',
+          content: '打卡失败'
+        })
+      }
+    })
+  }
+
+
   render () {
     const {badge,new_activity} = this.state
     const activity_list = badge["userActivityList"]
