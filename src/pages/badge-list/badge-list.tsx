@@ -30,7 +30,9 @@ export default class BadgeList extends Component {
   }
 
   aysnc componentWillMount () {
+    console.log("componentWillMount");
     const userid = this.getUserId();
+    console.log("userid in componentWillMount " + userid)
     request.get('getUserBadgesDetailList/' + userid).then(res => {
       if (res.data instanceof Array){
         this.setState({

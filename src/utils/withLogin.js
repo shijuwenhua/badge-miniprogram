@@ -34,7 +34,7 @@ function withLogin(lifecycle = 'willMount') {
         super(props);
       }
 
-      async $_autoLogin() {
+      async autoLogin() {
         const userid = Taro.getStorageSync("userid")
         if (!userid){
           try{
@@ -42,6 +42,7 @@ function withLogin(lifecycle = 'willMount') {
             if (res.code) {
               console.log(res.code)
               const res2 = await request.get('getOpenId?code=' + res.code)
+              console.log("already get userid")
               if (res2 && res2.data){
                 Taro.setStorageSync("userid", res2.data)
               }
@@ -68,8 +69,9 @@ function withLogin(lifecycle = 'willMount') {
       async componentWillMount() {
         if (super.componentWillMount) {
           if (lifecycle === LIFE_CYCLE_MAP[0]) {
-            const res = await this.$_autoLogin();
-            super.componentWillMount();
+            const res = await this.autoLogin();
+            console.log('componentWillMount with login')
+            await super.componentWillMount();
           }    
         }
       }
