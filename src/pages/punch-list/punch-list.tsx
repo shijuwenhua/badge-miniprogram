@@ -2,14 +2,18 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './punch-list.scss'
 import TabBar from '../../components/tab-bar'
-import mockData from '../../utils/mockData';
 import status from '../../utils/status'
 import { AtList, AtListItem } from "taro-ui"
-export default class BadgeDetail extends Component {
+import withLogin from '../../utils/withLogin'
+import request from '../../utils/requests'
+import _flattenDeep from 'lodash/flattenDeep'
+
+@withLogin()
+export default class PunchList extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      badges: []
+      activities: []
     }
   }
   /**
@@ -20,13 +24,32 @@ export default class BadgeDetail extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '徽章详情'
+    navigationBarTitleText: '打卡活动列表'
   }
 
-  componentWillMount () { 
-    this.setState({
-      badges: mockData.badges
+  aysnc componentWillMount () {
+    const userid = this.getUserId();
+    request.get('getUserBadgesDetailList/' + userid).then(res => {
+      if (res.data instanceof Array){
+        // filter the activities, add badge id in each activity 
+        const punch_activities = res.data.map( badge => badge.userActivityList.filter( activity => {
+          activity['badge_id'] = badge.id
+          return activity.type === 'scripture' && activity.status != status.COMPLETE
+        }))
+        this.setState({
+          activities: _flattenDeep(punch_activities)
+        })
+      }
+      else{
+        Taro.showModal ({
+          title: '错误',
+          content: '加载活动信息失败'
+        })
+      }
     })
+    // this.setState({
+    //   badges: mockData.badges
+    // })
   }
 
   componentDidMount () { }
@@ -39,27 +62,26 @@ export default class BadgeDetail extends Component {
 
   handleClick(data){
     Taro.navigateTo({
-      url: '../badge-detail/badge-detail?badge_id='+ data.id
+      url: '../activity-detail/activity-detail?activity_id='+ data.id + '&badge_id=' + data['badge_id']
     })
   }
 
   render () {
-    const {badges} = this.state
-    const processing_badges = badges.filter( badge => badge.status === status.PROCESSING)
+    const {activities} = this.state
     return (
       <View className='index'>
         <View className='panel'>
           <View className='panel__title'>打卡进行中...</View>
           <View className='panel__content no-padding'>
-            <AtList className="circle">
-            {processing_badges.map((badge) => (
+            <AtList>
+            {activities.map((activity) => (
               <AtListItem 
-                key={badge.id}
-                title={badge.title}
-                note={badge.description}
+                key={activity.id}
+                title={activity.title}
+                note={activity.description}
                 arrow='right'
-                thumb={badge.icon}
-                onClick={this.handleClick.bind(this,badge)}
+                thumb={activity.icon}
+                onClick={this.handleClick.bind(this,activity)}
               />
             ))}
             </AtList>

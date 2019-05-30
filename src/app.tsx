@@ -23,6 +23,7 @@ class App extends Component {
       'pages/punch-list/punch-list',
       'pages/badge-list/badge-list',
       'pages/badge-detail/badge-detail',
+      'pages/activity-detail/activity-detail',
     ],
     window: {
       backgroundTextStyle: 'light',
