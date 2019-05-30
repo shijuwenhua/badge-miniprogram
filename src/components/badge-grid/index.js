@@ -47,7 +47,7 @@ export default class BadgeGrid extends Component {
                 className={classNames(bodyClass, {
                   'at-grid-item--last': index === columnNum - 1
                 },{
-                  'new-activity': childItem.prop==='activity' && newActivity === childItem.id
+                  'new-activity': childItem.prop==='activity' && newActivity.toString() === childItem.id.toString()
                 })}
                 onClick={this.handleClick.bind(this, childItem, index, i)}
                 style={{
