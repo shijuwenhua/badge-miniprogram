@@ -2,7 +2,6 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './badge-detail.scss'
 import Badge from '../../components/badge'
-import mockData from '../../utils/mockData'
 import BadgeGrid from '../../components/badge-grid'
 import status from '../../utils/status'
 import withLogin from '../../utils/withLogin'
@@ -69,44 +68,20 @@ export default class BadgeDetail extends Component {
   componentDidHide () { }
 
   handleClick(data){
-    if data.type === 'badge'{
+    const {badge} = this.state
+    if data.prop === 'badge'{
       Taro.navigateTo({
         url: '../badge-detail/badge-detail?badge_id='+ data.id
       })
+      return
+    }
+    if data.prop === 'activity'{
+      Taro.navigateTo({
+        url: '../activity-detail/activity-detail?activity_id='+ data.id + '&badge_id=' + badge.id
+      })
+      return
     }
   }
-
-  handlePunch(activity_id){ 
-    const user_id = this.getUserId();
-    request.get('attendActivity/' + user_id + '/' + activity_id).then(res => {
-      if ( res.data && res.data.hasOwnProperty("id") ) {
-        this.setState({
-          badge: res.data,
-          new_activity: activity_id
-        })
-      }
-      else{
-        Taro.showModal ({
-          title: '错误',
-          content: '打卡失败'
-        })
-      }
-    })
-  //   const badge = this.requestPunch(activity_id);
-  //   this.setState({
-  //     badge: badge,
-  //     new_activity: activity_id
-  //   })
-  }
-  // requestPunch(activity_id){
-  //   let badge = mockData.badges.find( badge => {
-  //     return badge.items.find( item => {
-  //       item.finished_time = item.finished_time + 1;
-  //       return item.type==='activity' && item.id === activity_id;
-  //     })
-  //   });
-  //   return badge;
-  // }
 
   render () {
     const {badge,new_activity} = this.state
@@ -121,31 +96,12 @@ export default class BadgeDetail extends Component {
       return sub_badge_list_item;
     })
     const items = activity_list.concat(sub_badge_list);
-    let punch = false;
-    let repeat_items = [];
-    let data = items.map( (badge_item, index) => { 
+    let data = items.map( (badge_item) => { 
       badge_item['value'] = badge_item.title;
       badge_item['image'] = badge_item.icon;
-      if (badge_item.requiredAttendTimes > 1) {
-        repeat_items.push(index)
-      } 
       badge_item['status'] = badge_item.attendTimes >= badge_item.requiredAttendTimes ? status.COMPLETE: status.PROCESSING;
-      if (badge_item["type"] === "scripture") punch = badge_item.id
       return badge_item;
     })
-    repeat_items.forEach (repeat_index => {
-      const repeat_item = data[repeat_index];
-      const repeat_times = repeat_item.requiredAttendTimes;
-      let replace_items = [];
-      for (var i=1; i<=repeat_times; i++){
-        let each_repeat_item = Object.assign({}, repeat_item);
-        each_repeat_item['activity_index'] = i
-        each_repeat_item['status'] = repeat_item.attendTimes >= i ? status.COMPLETE: status.PROCESSING;
-        replace_items.push(each_repeat_item)
-      }
-      data.splice(repeat_index,1,replace_items);
-    })
-    data = _flattenDeep(data);
     return (
       <View className='panel'>
         <View className='avatar-panel'>
@@ -153,7 +109,6 @@ export default class BadgeDetail extends Component {
             <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
             <View className='at-article__h2'>{badge.title}</View>
             <View className='at-article__h3 last_h3'>{badge.description}</View>
-            {(punch && badge.status !== status.COMPLETE)?<AtButton onclick={this.handlePunch.bind(this,punch)}>打卡</AtButton>:""}
           </View>
         </View>
         <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
