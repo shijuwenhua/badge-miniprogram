@@ -36,16 +36,18 @@ export default {
   baseOptions(params, method = 'GET') {
     let { url, data } = params
     console.log('params', params)
+    Taro.showLoading({
+        title: '正在加载'
+    })  
     let contentType = 'application/json'
     contentType = params.contentType || contentType
     const option = {
-      isShowLoading: false,
-      loadingText: '正在加载',
       url: BASE_URL + "/" + url,
       data: data,
       method: method,
       header: { 'content-type': contentType, /*'token': "aa"*/ },
       success(res) {
+        Taro.hideLoading()
         if (res.statusCode === HTTP_STATUS.SUCCESS) {
           return res.data
         }
@@ -69,6 +71,7 @@ export default {
         logError('api', msg)
       },
       fail(e) {
+        Taro.hideLoading()
         Taro.showModal ({
             title: '错误',
             content: '网络请求出错'
