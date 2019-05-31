@@ -85,6 +85,7 @@ export default class PunchList extends Component {
               />
             ))}
             </AtList>
+            {activities.length === 0?<View className='at-article__h3'>目前没有需要打卡的活动</View>:""}
           </View>
         </View>
         <TabBar currentPage="punch-list"/>

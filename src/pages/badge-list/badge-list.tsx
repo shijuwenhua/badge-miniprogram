@@ -76,6 +76,7 @@ export default class BadgeList extends Component {
           <View className='panel__title'>已获得徽章</View>
           <View className='panel__content no-padding'>
           <AtGrid className='circle' hasBorder={false} data={complete_badges} onClick={this.handleClick.bind(this)}/>
+          {complete_badges.length === 0?<View className='at-article__h3'>目前没有已经完成的徽章哦～加油啦～～～</View>:""}
           </View>
         </View>
         <View className='panel'>
@@ -93,6 +94,7 @@ export default class BadgeList extends Component {
               />
             ))}
             </AtList>
+            {processing_badges.length === 0?<View className='at-article__h3'>目前没有正在进行中的徽章</View>:""}
           </View>
         </View>
         <TabBar currentPage="badge-list"/>
