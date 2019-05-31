@@ -11,3 +11,8 @@
 .new-activity {
     background: radial-gradient(circle, #f1e3aa, white);
 }
+.at-grid-item__content-inner .content-inner__text {
+    font-size: 28rpx;
+    -webkit-line-clamp: 1;
+
+}
