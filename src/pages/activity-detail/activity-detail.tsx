@@ -67,10 +67,10 @@ export default class BadgeDetail extends Component {
   handlePunch(){
     const {activity} = this.state
     const user_id = this.getUserId();
-    request.get('attendActivity/' + user_id + '/' + activity.id).then(res => {
+    request.get('attendActivityReutrnActivityDetail/' + user_id + '/' + activity.id).then(res => {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
-          activity: this.loadActivityfromBadge(res.data, activity.id),
+          activity: res.data,
           new_activity: activity.attendTimes
         })
       }
@@ -112,6 +112,7 @@ export default class BadgeDetail extends Component {
       for (var i=1; i<=activity.requiredAttendTimes; i++){
         let each_repeat_item = Object.assign({}, activity);
         each_repeat_item['id'] = i
+        each_repeat_item['value'] = '第' + i + '次'
         each_repeat_item['status'] = activity.attendTimes >= i ? status.COMPLETE: status.PROCESSING;
         repeat_items.push(each_repeat_item)
       }

@@ -6,8 +6,6 @@ import BadgeGrid from '../../components/badge-grid'
 import status from '../../utils/status'
 import withLogin from '../../utils/withLogin'
 import request from '../../utils/requests'
-import { AtButton } from 'taro-ui';
-import _flattenDeep from 'lodash/flattenDeep'
 
 @withLogin()
 export default class BadgeDetail extends Component {
@@ -85,7 +83,7 @@ export default class BadgeDetail extends Component {
 
   handlePunch(activity_id){ 
     const user_id = this.getUserId();
-    request.get('attendActivity/' + user_id + '/' + activity_id).then(res => {
+    request.get('attendActivityReutrnBadgeDetail/' + user_id + '/' + activity_id).then(res => {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           badge: res.data,
