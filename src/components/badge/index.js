@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
 import status from '../../utils/status'
+import classNames from 'classnames'
 
 import './index.scss'
 
@@ -13,16 +14,21 @@ export default class Badge extends Component {
     const {
       size,
       complete,
-      image
+      image,
+      circle
     } = this.props
     return (
-      <View className={complete===status.COMPLETE ?'badge-center':'badge-grey badge-center'} >
-        <AtAvatar size={size} circle image={image}></AtAvatar>
+      <View className={classNames('badge-center', this.props.className,{
+        'badge-grey': complete !== status.COMPLETE
+      })}>
+        <AtAvatar className={classNames({'new-activity': complete === status.COMPLETE})} size={size} circle={circle} image={image}></AtAvatar>
       </View>
     )
   }
 }
 Badge.defaultProps = {
   size: 'normal',
-  complete: '1'
+  complete: '1',
+  circle: true,
+  light: false
 }

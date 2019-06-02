@@ -6,13 +6,14 @@ import BadgeGrid from '../../components/badge-grid'
 import status from '../../utils/status'
 import withLogin from '../../utils/withLogin'
 import request from '../../utils/requests'
+import TabBar from '../../components/tab-bar'
 
 @withLogin()
 export default class BadgeDetail extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      badge: [],
+      badge: {status: status.PROCESSING},
       new_activity: -1
     }
   }
@@ -120,15 +121,19 @@ export default class BadgeDetail extends Component {
       return badge_item;
     })
     return (
-      <View className='panel'>
+      <View className='panel nopa'>
         <View className='avatar-panel'>
           <View>
             <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
             <View className='at-article__h2'>{badge.title}</View>
             <View className='at-article__h3 last_h3'>{badge.description}</View>
+            {badge.status === status.COMPLETE?
+              <View className='at-article__h3 congratulation'>恭喜您成功得到勋章！</View>:''
+            }
           </View>
         </View>
         <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
+        <TabBar/>
       </View>
     )
   }

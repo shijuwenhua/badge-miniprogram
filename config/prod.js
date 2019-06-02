@@ -3,7 +3,7 @@ module.exports = {
     NODE_ENV: '"production"'
   },
   defineConstants: {
-    BASE_URL: '"https://www.shijuwenhua.top"'
+    BASE_URL: '"https://www.shijuwenhua.top/signin/"'
   },
   weapp: {},
   h5: {}

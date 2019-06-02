@@ -7,6 +7,7 @@ import status from '../../utils/status'
 import withLogin from '../../utils/withLogin'
 import request from '../../utils/requests'
 import { AtButton } from 'taro-ui';
+import TabBar from '../../components/tab-bar'
 
 @withLogin()
 export default class BadgeDetail extends Component {
@@ -121,13 +122,14 @@ export default class BadgeDetail extends Component {
       <View className='panel'>
         <View className='avatar-panel'>
           <View>
-            <Badge complete={activity.status} size="large" image={activity.icon}></Badge>
+            <Badge complete={activity.status} circle={false} size="large" image={activity.icon}></Badge>
             <View className='at-article__h2'>{activity.title}</View>
             <View className='at-article__h3 last_h3'>{activity.description}</View>
             {punch?<AtButton className='fix-size-button' type='primary' onclick={this.handlePunch.bind(this)}>打卡</AtButton>:""}
           </View>
         </View>
         <BadgeGrid hasBorder={false} data={repeat_items} newActivity={new_activity}/>
+        <TabBar/>
       </View>
     )
   }

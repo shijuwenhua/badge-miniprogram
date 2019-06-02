@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "badge-miniprogram",
   "description": "badge system for shijuwenhua",
-  "appid": "touristappid",
+  "appid": "wxb29a76a9a9b2015b",
   "setting": {
     "urlCheck": true,
     "es6": false,

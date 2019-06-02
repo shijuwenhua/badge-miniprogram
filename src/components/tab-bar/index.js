@@ -22,9 +22,12 @@ export default class TabBar extends Component {
   }
   render () {
     const { currentPage } = this.props
-    let current = 0
-    if (currentPage == "badge-list"){
+    let current = -1
+    if (currentPage === "badge-list"){
       current = 1
+    }
+    if (currentPage === "punch-list"){
+      current = 0
     }
     return (
       <AtTabBar
