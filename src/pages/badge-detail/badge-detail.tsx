@@ -117,7 +117,7 @@ export default class BadgeDetail extends Component {
     let data = items.map( (badge_item) => { 
       badge_item['value'] = badge_item.title;
       badge_item['image'] = badge_item.icon;
-      badge_item['status'] = badge_item.attendTimes >= badge_item.requiredAttendTimes ? status.COMPLETE: status.PROCESSING;
+      badge_item['status'] = ((badge_item.attendTimes >= badge_item.requiredAttendTimes) || (badge_item['status'] === status.COMPLETE)) ? status.COMPLETE: status.PROCESSING;
       return badge_item;
     })
     return (
