@@ -65,7 +65,7 @@ export default class BadgeGrid extends Component {
                             'badge-grey': childItem.status === status.PROCESSING
                           })}
                           src={childItem.image}
-                          mode='scaleToFill'
+                          mode='aspectFill'
                         />
                       )}
                       {_isObject(childItem.iconInfo) && !childItem.image && (
