@@ -7,6 +7,7 @@ import { AtList, AtListItem } from "taro-ui"
 import withLogin from '../../utils/withLogin'
 import request from '../../utils/requests'
 import _flattenDeep from 'lodash/flattenDeep'
+import Helper from '../../components/helper' 
 
 @withLogin()
 export default class PunchList extends Component {
@@ -70,6 +71,7 @@ export default class PunchList extends Component {
     const {activities} = this.state
     return (
       <View className='index'>
+        <Helper/>
         <View className='panel'>
           <View className='panel__title'>打卡进行中...</View>
           <View className='panel__content no-padding'>

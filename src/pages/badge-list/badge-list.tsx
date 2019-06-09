@@ -7,6 +7,7 @@ import request from '../../utils/requests'
 import status from '../../utils/status'
 // import mockData from '../../utils/mockData';
 import withLogin from '../../utils/withLogin'
+import Helper from '../../components/helper'
 
 @withLogin()
 export default class BadgeList extends Component {
@@ -72,6 +73,7 @@ export default class BadgeList extends Component {
     const processing_badges = badges.filter( badge => badge.status === status.PROCESSING)
     return (
       <View className='index'>
+        <Helper/>
         <View className='panel'>
           <View className='panel__title'>已获得徽章</View>
           <View className='panel__content no-padding'>

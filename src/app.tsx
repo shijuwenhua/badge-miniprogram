@@ -24,6 +24,7 @@ class App extends Component {
       'pages/badge-list/badge-list',
       'pages/badge-detail/badge-detail',
       'pages/activity-detail/activity-detail',
+      'pages/helper/helper'
     ],
     window: {
       backgroundTextStyle: 'light',

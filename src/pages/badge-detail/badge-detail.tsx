@@ -104,22 +104,29 @@ export default class BadgeDetail extends Component {
   render () {
     const {badge,new_activity} = this.state
     const activity_list = badge["userActivityList"]
-    activity_list.map( activity_item => { 
-      activity_item['prop'] = 'activity';
-      return activity_item;
-    })
+    if (activity_list instanceof Array){
+      activity_list.map( activity_item => { 
+        activity_item['prop'] = 'activity';
+        return activity_item;
+      })
+    }
     const sub_badge_list = badge["badgeList"]
-    sub_badge_list.map( sub_badge_list_item => { 
-      sub_badge_list_item['prop'] = 'badge';
-      return sub_badge_list_item;
-    })
-    const items = activity_list.concat(sub_badge_list);
-    let data = items.map( (badge_item) => { 
-      badge_item['value'] = badge_item.title;
-      badge_item['image'] = badge_item.icon;
-      badge_item['status'] = ((badge_item.attendTimes >= badge_item.requiredAttendTimes) || (badge_item['status'] === status.COMPLETE)) ? status.COMPLETE: status.PROCESSING;
-      return badge_item;
-    })
+    if (sub_badge_list instanceof Array){
+      sub_badge_list.map( sub_badge_list_item => { 
+        sub_badge_list_item['prop'] = 'badge';
+        return sub_badge_list_item;
+      })
+    }
+    let data = []
+    if(activity_list instanceof Array){
+      const items = activity_list.concat(sub_badge_list);
+      data = items.map( (badge_item) => { 
+        badge_item['value'] = badge_item.title;
+        badge_item['image'] = badge_item.icon;
+        badge_item['status'] = ((badge_item.attendTimes >= badge_item.requiredAttendTimes) || (badge_item['status'] === status.COMPLETE)) ? status.COMPLETE: status.PROCESSING;
+        return badge_item;
+      })
+    }
     return (
       <View className='panel nopa'>
         <View className='avatar-panel'>
