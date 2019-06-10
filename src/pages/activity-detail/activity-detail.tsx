@@ -15,7 +15,7 @@ export default class BadgeDetail extends Component {
     super(...arguments)
     this.state = {
       activity: [],
-      new_activity: -1
+      new_activity: -100
     }
   }
 
@@ -40,7 +40,7 @@ export default class BadgeDetail extends Component {
           const activity = this.loadActivityfromBadge(res.data, activity_id)
           this.setState({
             activity: activity,
-            new_activity: -1
+            new_activity: -100
           })
         }
         else{

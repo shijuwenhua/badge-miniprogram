@@ -14,7 +14,7 @@ export default class BadgeDetail extends Component {
     super(...arguments)
     this.state = {
       badge: {status: status.PROCESSING},
-      new_activity: -1
+      new_activity: -100
     }
   }
 
@@ -36,13 +36,13 @@ export default class BadgeDetail extends Component {
     if (badge_id){
       // this.setState({
       //   badge: mockData.badges.find(badge => badge.id.toString() === badge_id.toString()),
-      //   new_activity: -1
+      //   new_activity: -100
       // })
       request.get('getUserBadgesDetail/' + user_id + '/' + badge_id).then(res => {
         if ( res.data && res.data.hasOwnProperty("id") ) {
           this.setState({
             badge: res.data,
-            new_activity: -1
+            new_activity: -100
           })
         }
         else{
