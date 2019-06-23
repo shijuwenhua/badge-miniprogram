@@ -31,7 +31,8 @@ export default class BadgeDetail extends Component {
 
   async componentWillMount () {
     console.log(this.$router.params)
-    const { badge_id, activity_id } = this.$router.params
+    const { badge_id, activity_id, scene } = this.$router.params
+    const activity_id_from_scene = parseInt(decodeURIComponent(scene).split("=")[1])
     const user_id = this.getUserId();
     if (badge_id){
       // this.setState({
@@ -55,6 +56,9 @@ export default class BadgeDetail extends Component {
     }
     if (activity_id){
       this.handlePunch(activity_id)
+    }
+    if (activity_id_from_scene){
+      this.handlePunch(activity_id_from_scene)
     }
   }
 
