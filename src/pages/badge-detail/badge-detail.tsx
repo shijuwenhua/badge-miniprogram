@@ -7,6 +7,7 @@ import status from '../../utils/status'
 import withLogin from '../../utils/withLogin'
 import request from '../../utils/requests'
 import TabBar from '../../components/tab-bar'
+import CommBadge from '../../components/comm-badge'
 
 @withLogin()
 export default class BadgeDetail extends Component {
@@ -104,6 +105,10 @@ export default class BadgeDetail extends Component {
     })
   }
 
+  handleCommBadge(...commData){
+    console.log(commData[0] + commData[1]);
+  }
+
 
   render () {
     const {badge,new_activity} = this.state
@@ -121,15 +126,21 @@ export default class BadgeDetail extends Component {
         return sub_badge_list_item;
       })
     }
-    let data = []
+    let data = [];
+    let commBadge = false;
     if(activity_list instanceof Array){
-      const items = activity_list.concat(sub_badge_list);
-      data = items.map( (badge_item) => { 
-        badge_item['value'] = badge_item.title;
-        badge_item['image'] = badge_item.icon;
-        badge_item['status'] = ((badge_item.attendTimes >= badge_item.requiredAttendTimes) || (badge_item['status'] === status.COMPLETE)) ? status.COMPLETE: status.PROCESSING;
-        return badge_item;
-      })
+      if (activity_list.size == 1 && activity_list[0]["type"] === "scripture") {
+        commBadge = true;
+      }
+      else {
+        const items = activity_list.concat(sub_badge_list);
+        data = items.map( (badge_item) => { 
+          badge_item['value'] = badge_item.title;
+          badge_item['image'] = badge_item.icon;
+          badge_item['status'] = ((badge_item.attendTimes >= badge_item.requiredAttendTimes) || (badge_item['status'] === status.COMPLETE)) ? status.COMPLETE: status.PROCESSING;
+          return badge_item;
+        })
+      }
     }
     return (
       <View className='panel nopa'>
@@ -143,7 +154,13 @@ export default class BadgeDetail extends Component {
             }
           </View>
         </View>
-        <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
+        {true?
+          <View className='.panel__content'>
+            <CommBadge data={data} onSubmmit={this.handleCommBadge.bind(this)}></CommBadge>
+           </View>
+          :
+          <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
+        }
         <TabBar/>
       </View>
     )
