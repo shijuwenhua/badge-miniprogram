@@ -8,6 +8,7 @@ import withLogin from '../../utils/withLogin'
 import request from '../../utils/requests'
 import TabBar from '../../components/tab-bar'
 import CommBadge from '../../components/comm-badge'
+import Description from '../../components/description'
 
 @withLogin()
 export default class BadgeDetail extends Component {
@@ -40,7 +41,7 @@ export default class BadgeDetail extends Component {
       //   badge: mockData.badges.find(badge => badge.id.toString() === badge_id.toString()),
       //   new_activity: -100
       // })
-      request.get('getUserBadgesDetail/' + user_id + '/' + badge_id).then(res => {
+      request.get(`getUserBadgesDetail/${user_id}/${badge_id}`).then(res => {
         if ( res.data && res.data.hasOwnProperty("id") ) {
           this.setState({
             badge: res.data,
@@ -73,13 +74,13 @@ export default class BadgeDetail extends Component {
 
   handleClick(data){
     const {badge} = this.state
-    if data.prop === 'badge'{
+    if (data.prop === 'badge') {
       Taro.navigateTo({
         url: '../badge-detail/badge-detail?badge_id='+ data.id
       })
       return
     }
-    if data.prop === 'activity'{
+    if (data.prop === 'activity') {
       Taro.navigateTo({
         url: '../activity-detail/activity-detail?activity_id='+ data.id + '&badge_id=' + badge.id
       })
@@ -89,7 +90,7 @@ export default class BadgeDetail extends Component {
 
   handlePunch(activity_id){ 
     const user_id = this.getUserId();
-    request.get('attendActivityReutrnBadgeDetail/' + user_id + '/' + activity_id).then(res => {
+    request.get(`attendActivityReutrnBadgeDetail/${user_id}/${activity_id}/1`).then(res => {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           badge: res.data,
@@ -128,8 +129,9 @@ export default class BadgeDetail extends Component {
     }
     let data = [];
     let commBadge = false;
-    if(activity_list instanceof Array){
-      if (activity_list.size == 1 && activity_list[0]["type"] === "scripture") {
+    if(activity_list instanceof Array) {
+      debugger;
+      if (activity_list.length == 1 && activity_list[0]['type'] === 'commonScripture') {
         commBadge = true;
       }
       else {
@@ -148,13 +150,13 @@ export default class BadgeDetail extends Component {
           <View>
             <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
             <View className='at-article__h2'>{badge.title}</View>
-            <View className='at-article__h3 last_h3'>{badge.description}</View>
+            <Description description={badge.description}></Description>
             {badge.status === status.COMPLETE?
               <View className='at-article__h3 congratulation'>恭喜您成功得到勋章！</View>:''
             }
           </View>
         </View>
-        {true?
+        {commBadge ?
           <View className='.panel__content'>
             <CommBadge data={data} onSubmmit={this.handleCommBadge.bind(this)}></CommBadge>
            </View>

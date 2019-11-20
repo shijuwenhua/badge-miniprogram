@@ -89,7 +89,7 @@ export default class BadgeList extends Component {
               <AtListItem 
                 key={badge.id}
                 title={badge.title}
-                note={badge.description}
+                note={badge.description.includes("{") ? JSON.parse(badge.description)[0].text : badge.description}
                 arrow='right'
                 thumb={badge.icon}
                 onClick={this.handleClick.bind(this,badge)}
