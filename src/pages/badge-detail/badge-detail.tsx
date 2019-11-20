@@ -130,9 +130,9 @@ export default class BadgeDetail extends Component {
     let data = [];
     let commBadge = false;
     if(activity_list instanceof Array) {
-      debugger;
       if (activity_list.length == 1 && activity_list[0]['type'] === 'commonScripture') {
         commBadge = true;
+        data = badge;
       }
       else {
         const items = activity_list.concat(sub_badge_list);
@@ -157,9 +157,7 @@ export default class BadgeDetail extends Component {
           </View>
         </View>
         {commBadge ?
-          <View className='.panel__content'>
-            <CommBadge data={data} onSubmmit={this.handleCommBadge.bind(this)}></CommBadge>
-           </View>
+          <CommBadge data={data} onSubmmit={this.handleCommBadge.bind(this)}></CommBadge>
           :
           <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
         }

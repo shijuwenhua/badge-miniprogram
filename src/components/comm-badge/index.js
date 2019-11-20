@@ -8,7 +8,7 @@ export default class CommBadge extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      commNum: 0,
+      commNum: '',
       commPeople: ''
     }
   }
@@ -24,13 +24,14 @@ export default class CommBadge extends Component {
   }
   render () {
     const { data } = this.props;
+    const activity = data.userActivityList[0];
     return (
       <View class='common-badge-view'>
-        <View className='at-article__h3'>需要完成{mock_data.needFinished}</View>
-        <View className='at-article__h3'>已经完成{mock_data.hasFinished}</View>
-        <View className='at-article__h3'>其中您完成{mock_data.userFinished}</View>
+        <View className='at-article__h3'>需要完成<span>{activity.requiredAttendTimes}</span>次</View>
+        <View className='at-article__h3'>已经完成<span>{activity.attendTimes}</span>次</View>
+        <View className='at-article__h3'>其中您完成<span>{activity.attendTimes}</span>次</View>
         <AtInput className='input-item'
-          title='新增共修'
+          title='新增共修:'
           type='number'
           value={this.state.commNum}
           onChange={this.handleInputChange.bind(this, 'commNum')}
@@ -49,6 +50,11 @@ export default class CommBadge extends Component {
 }
 
 CommBadge.defaultProps = {
-  data: []
+  data: {
+    userActivityList: [{
+      requiredAttendTimes: 0,
+      attendTimes: 0
+    }]
+  }
 }
 

@@ -20,8 +20,8 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/punch-list/punch-list',
       'pages/badge-list/badge-list',
+      'pages/punch-list/punch-list',
       'pages/badge-detail/badge-detail',
       'pages/activity-detail/activity-detail',
       'pages/helper/helper'
