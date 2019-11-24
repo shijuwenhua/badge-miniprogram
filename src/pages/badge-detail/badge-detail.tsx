@@ -9,6 +9,7 @@ import request from '../../utils/requests'
 import TabBar from '../../components/tab-bar'
 import CommBadge from '../../components/comm-badge'
 import Description from '../../components/description'
+import BadgeAni from '../../components/badge-ani'
 
 @withLogin()
 export default class BadgeDetail extends Component {
@@ -162,6 +163,7 @@ export default class BadgeDetail extends Component {
           <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
         }
         <TabBar/>
+        <BadgeAni open={true} title={badge.title} icon={badge.icon} />
       </View>
     )
   }
