@@ -21,7 +21,7 @@ export default class Description extends Component {
             <View className='at-article__h3' key={item.text}
               style={{
                 'color': item.color || '#999',
-                'font-size': `${item.size || '0.8'}rem`,
+                'font-size': `${item.size || '32'}rpx`,
                 'text-align': item.align || 'left',
                 'margin-bottom': item.bottom || '0.6rem',
                 'margin-top': item.top || '0.2rem'
