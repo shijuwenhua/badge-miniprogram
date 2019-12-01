@@ -145,6 +145,23 @@ export default class BadgeDetail extends Component {
         })
       }
     }
+    let isOpenShown = false;
+    let titleShown = badge.title;
+    let iconShown = badge.icon;
+    let typeShown = 'badge';
+    if (new_activity != -100) {
+      isOpenShown = true;
+      if (badge.status != status.COMPLETE) {
+        typeShown = 'activity';
+        const activity = data.filter(i => i['id'].toString() === new_activity.toString());
+        if (activity.length != 1) {
+          isOpenShown = false;
+        }else {
+          titleShown = activity[0].title;
+          iconShown = activity[0].icon;
+        }
+      } 
+    }
     return (
       <View className='panel nopa'>
         <View className='avatar-panel'>
@@ -163,7 +180,7 @@ export default class BadgeDetail extends Component {
           <BadgeGrid hasBorder={false} data={data} newActivity={new_activity} onClick={this.handleClick.bind(this)}/>
         }
         <TabBar/>
-        <BadgeAni open={true} title={badge.title} icon={badge.icon} />
+        <BadgeAni open={isOpenShown} title={titleShown} icon={iconShown} type={typeShown} />
       </View>
     )
   }

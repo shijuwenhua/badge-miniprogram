@@ -9,14 +9,20 @@ export default class BadgeAni extends Component {
   constructor () {
     super(...arguments)
     this.state = {
-      isOpened: false,
+      isOpened: this.props.open,
     }
   }
-  componentWillMount () {
-    this.setState({
-      isOpened: this.props.open
-    })
+
+  componentWillReceiveProps (nextProps) {
+    const { isOpened } = this.state
+    const newData = nextProps.open;
+    if (isOpened !== newData) {
+      this.setState({
+        isOpened: newData,
+      })
+    }
   }
+
   onClose () {
     this.setState({
       isOpened: false
@@ -29,14 +35,16 @@ export default class BadgeAni extends Component {
         isOpened={this.state.isOpened}
         onClose={this.onClose.bind(this)}
       >
-        <Text>解锁{type === 'activity'? '活动': '徽章'}</Text>
-        <View className='content-inner__icon at-avatar at-avatar--middle new-activity'>
+        <View className='icon-container'>
+          <Text>完成{type === 'activity'? '活动': '徽章'}</Text>
+          <View className='icon-container image-container'>
           <Image
-            className='at-avatar__img'
+            className='icon-image'
             src={icon}
             mode='aspectFill'
           />
-        <Text className= 'at-icon'>{title}</Text>
+          </View>
+          <Text className= 'at-icon'>{title}</Text>
         </View>
       </AtCurtain>
     )

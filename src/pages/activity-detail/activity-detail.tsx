@@ -8,6 +8,7 @@ import withLogin from '../../utils/withLogin'
 import request from '../../utils/requests'
 import { AtButton } from 'taro-ui';
 import TabBar from '../../components/tab-bar'
+import BadgeAni from '../../components/badge-ani'
 
 @withLogin()
 export default class BadgeDetail extends Component {
@@ -130,6 +131,7 @@ export default class BadgeDetail extends Component {
         </View>
         <BadgeGrid hasBorder={false} data={repeat_items} newActivity={new_activity}/>
         <TabBar/>
+        <BadgeAni open={new_activity != -100 && activity.status == status.COMPLETE} title={activity.title} icon={activity.icon} type={'activity'} />
       </View>
     )
   }
