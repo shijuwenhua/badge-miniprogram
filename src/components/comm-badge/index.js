@@ -9,26 +9,55 @@ export default class CommBadge extends Component {
     super(...arguments)
     this.state = {
       commNum: '',
-      commPeople: ''
+      commPeople: '',
+      errorStatus: false
     }
   }
-
-  handleInputChange(name, ...value) {
+  componentWillMount () {
     this.setState({
-      [name]: value[value.length - 2].target.value
+      commPeople: this.props.data.userActivityList[0].comments
     });
   }
 
-  handleClick = () => {
-    this.props.onSubmmit(this.state.commNum, this.state.commPeople)
+  handleInputChange(name, ...value) {
+    const val = value[value.length - 2].target.value;
+    this.setState({
+      [name]: val
+    });
+    if (name === 'commNum') {
+      if (/^\d+$/.test(val)) {
+        this.setState({
+          errorStatus: false
+        });
+      } else {
+        this.setState({
+          errorStatus: true
+        });
+      }
+    }
   }
+
+  // handleErrorInfo = () => {
+  // }
+
+  handleClick = () => {
+    const commNum = this.state.commNum.trim();
+    if (/^\d+$/.test(commNum)) {
+      this.props.onSubmmit(this.state.commNum, this.state.commPeople);
+    } else {
+      this.setState({
+        errorStatus: true
+      });
+    }
+  }
+
   render () {
     const { data } = this.props;
     const activity = data.userActivityList[0];
     return (
       <View class='common-badge-view'>
         <View className='at-article__h3'>需要完成<span>{activity.requiredAttendTimes}</span>次</View>
-        <View className='at-article__h3'>已经完成<span>{activity.attendTimes}</span>次</View>
+        <View className='at-article__h3'>已经完成<span>{activity.commonTotalAttend}</span>次</View>
         <View className='at-article__h3'>其中您完成<span>{activity.attendTimes}</span>次</View>
         <AtInput className='input-item'
           title='新增共修:'
@@ -36,6 +65,8 @@ export default class CommBadge extends Component {
           value={this.state.commNum}
           onChange={this.handleInputChange.bind(this, 'commNum')}
           placeholder='请输入数字'
+          error={errorStatus}
+          //onErrorClick={this.handleErrorInfo.bind(this)}
         />
         <AtTextarea className='input-item'
           maxLength={200}

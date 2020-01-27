@@ -34,8 +34,8 @@ export default class BadgeDetail extends Component {
 
   async componentWillMount () {
     console.log(this.$router.params)
-    const { badge_id, activity_id, scene } = this.$router.params
-    const activity_id_from_scene = parseInt(decodeURIComponent(scene).split("=")[1])
+    const { badge_id, scene } = this.$router.params
+    //const is_comm_from_scene = 
     const user_id = this.getUserId();
     if (badge_id){
       // this.setState({
@@ -56,12 +56,19 @@ export default class BadgeDetail extends Component {
           })
         }
       })
-    }
-    if (activity_id){
-      this.handlePunch(activity_id)
-    }
-    if (activity_id_from_scene){
-      this.handlePunch(activity_id_from_scene)
+    } else{
+      let { activity_id, is_comm } = this.$router.params
+      debugger;
+      if (scene){    
+        let obj = {}, arr = decodeURIComponent(scene).split('&');
+        for (let i = 0; i < arr.length; i++) {
+            const subArr = arr[i].split('=');
+            obj[subArr[0]] = subArr[1];
+        }
+        activity_id = obj['activity_id'];
+        is_comm = obj['is_comm'];
+      }
+      this.handlePunch(activity_id, is_comm === 'true' ? 0 : 1, '');
     }
   }
 
@@ -89,14 +96,20 @@ export default class BadgeDetail extends Component {
     }
   }
 
-  handlePunch(activity_id){ 
+  handlePunch(activity_id, num, comments, showResult=false){ 
     const user_id = this.getUserId();
-    request.get(`attendActivityReutrnBadgeDetail/${user_id}/${activity_id}/1`).then(res => {
+    request.get(`attendActivityReutrnBadgeDetail/${user_id}/${activity_id}/${num}?comments=${comments}`).then(res => {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           badge: res.data,
           new_activity: activity_id
-        })
+        });
+        if(showResult) {
+          Taro.showModal ({
+            title: '消息',
+            content: '打卡成功'
+          })
+        }; 
       }
       else{
         Taro.showModal ({
@@ -108,12 +121,13 @@ export default class BadgeDetail extends Component {
   }
 
   handleCommBadge(...commData){
-    console.log(commData[0] + commData[1]);
+    const activity_id = this.state.badge["userActivityList"][0].id;
+    this.handlePunch(activity_id, commData[0], commData[1], true);
   }
 
 
   render () {
-    const {badge,new_activity} = this.state
+    const { badge, new_activity } = this.state
     const activity_list = badge["userActivityList"]
     if (activity_list instanceof Array){
       activity_list.map( activity_item => { 
@@ -149,7 +163,7 @@ export default class BadgeDetail extends Component {
     let titleShown = badge.title;
     let iconShown = badge.icon;
     let typeShown = 'badge';
-    if (new_activity != -100) {
+    if (!commBadge && new_activity != -100) {
       isOpenShown = true;
       if (badge.status != status.COMPLETE) {
         typeShown = 'activity';

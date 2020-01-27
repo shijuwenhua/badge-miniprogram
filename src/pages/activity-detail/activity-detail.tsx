@@ -35,6 +35,7 @@ export default class BadgeDetail extends Component {
     console.log(this.$router.params)
     const { badge_id, activity_id } = this.$router.params
     const user_id = this.getUserId();
+    console.log('user id: ' + user_id);
     if (badge_id && activity_id){
       request.get(`getUserBadgesDetail/${user_id}/${badge_id}`).then(res => {
         if ( res.data && res.data.hasOwnProperty("id") ) {
@@ -67,9 +68,9 @@ export default class BadgeDetail extends Component {
   }
 
   handlePunch(){
-    const {activity} = this.state
+    const { activity } = this.state
     const user_id = this.getUserId();
-    request.get(`attendActivityReutrnActivityDetail/${user_id}/${activity.id}/1`).then(res => {
+    request.get(`attendActivityReutrnActivityDetail/${user_id}/${activity.id}/1?comments=`).then(res => {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           activity: res.data,
