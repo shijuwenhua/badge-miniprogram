@@ -1,0 +1,17 @@
+.common-badge-view {
+    margin: 0 1rem;
+    .at-article__h3{
+        text-align: left;
+        font-size: 32rpx;
+        color: #333333;
+        margin: 0.2rem 0;
+        span {
+            margin: 0 0.5rem;
+            color: rgb(83, 83, 83);
+            font-weight: bold;
+        }
+    }
+}
+.fix-size-button {
+    width: 300rpx;
+}

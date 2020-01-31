@@ -1,0 +1,53 @@
+.icon-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 10rpx 0 10rpx white, -10rpx 0 10rpx white, 0 10rpx 10rpx white, 0 -10rpx 10rpx white;
+    font-size: 0.9rem;
+}
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+.image-container {
+    box-shadow: 1px 1px 15px 20px rgba(255, 255, 255, 0.6);
+    border: solid 5rpx white;
+    width: 240rpx;
+    height: 240rpx;
+    border-radius: 50%;
+    animation: icon-ani  5s linear 1s infinite;
+    z-index: -1;
+    margin: 25rpx;
+}
+.image-container image {
+    width: 240rpx;
+    height: 240rpx;
+}
+
+.icon-container image:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 65%;
+    height: 100%;    
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: icon-before-ani  3s ease-in 1s infinite;
+}
+@keyframes icon-ani {
+    0% { box-shadow: 1px 1px 15px 20px rgba(255, 255, 255, 0.6); }
+    50% { box-shadow: 1px 1px 20px 30px rgba(255, 255, 255, 0.9); }
+    100% { box-shadow: 1px 1px 15px 20px rgba(255, 255, 255, 0.6); }
+}
+@keyframes icon-before-ani {
+    0% { left: -150% }
+    70% { left: -150% }
+    100% { left: 150% }
+}
