@@ -113,6 +113,15 @@
 .input-item {
   margin-bottom: 30rpx;
   margin-left: 0;
+  .at-input__title {
+    width: auto;
+    white-space:nowrap;
+  }
+  .at-input__input {
+    border: solid 1px#d6e4ef;
+    text-align: center;
+    height: 65rpx;
+  }
 }
 .item-content__info-note {
   overflow: hidden;

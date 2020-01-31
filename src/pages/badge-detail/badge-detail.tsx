@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
 import './badge-detail.scss'
 import Badge from '../../components/badge'
 import BadgeGrid from '../../components/badge-grid'
@@ -105,10 +105,14 @@ export default class BadgeDetail extends Component {
           new_activity: activity_id
         });
         if(showResult) {
+          let content = res.data.title.match(/[万|亿](.*)万人共修/);
+          content = (content && content.length == 2) ? content[1] : res.data.title;
+          const msg = `您本次完成${num}遍${content}, \r\n您总共完成${res.data.userActivityList[0].attendTimes}遍, \r\n感恩随喜您的功德。`
           Taro.showModal ({
             title: '消息',
-            content: '打卡成功'
-          })
+            content: msg
+          });
+          Taro.pageScrollTo({scrollTop:0});
         }; 
       }
       else{
@@ -178,10 +182,15 @@ export default class BadgeDetail extends Component {
     }
     return (
       <View className='panel nopa'>
-        <View className='avatar-panel'>
+        <View className='avatar-panel' id='badge-panel'>
           <View>
             <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
             <View className='at-article__h2'>{badge.title}</View>
+            {commBadge ?
+              <Image style='width:90%' src={badge.userActivityList[0].icon} mode='aspectFit' lazyLoad></Image>
+              :
+              ''
+            }
             <Description description={badge.description}></Description>
             {badge.status === status.COMPLETE?
               <View className='at-article__h3 congratulation'>恭喜您成功得到勋章！</View>:''

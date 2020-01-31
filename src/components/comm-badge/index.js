@@ -56,11 +56,11 @@ export default class CommBadge extends Component {
     const activity = data.userActivityList[0];
     return (
       <View class='common-badge-view'>
-        <View className='at-article__h3'>需要完成<span>{activity.requiredAttendTimes}</span>次</View>
-        <View className='at-article__h3'>已经完成<span>{activity.commonTotalAttend}</span>次</View>
-        <View className='at-article__h3'>其中您完成<span>{activity.attendTimes}</span>次</View>
+        <View className='at-article__h3'>完成目标<span>{activity.requiredAttendTimes}</span>遍</View>
+        <View className='at-article__h3'>已经完成<span>{activity.commonTotalAttend}</span>遍</View>
+        <View className='at-article__h3'>您个人完成<span>{activity.attendTimes}</span>遍</View>
         <AtInput className='input-item'
-          title='新增共修:'
+          title='新增报数(可以多次重复报):'
           type='number'
           value={this.state.commNum}
           onChange={this.handleInputChange.bind(this, 'commNum')}
@@ -68,6 +68,7 @@ export default class CommBadge extends Component {
           error={errorStatus}
           //onErrorClick={this.handleErrorInfo.bind(this)}
         />
+        <View className='at-article__h3'>回向给(回向名单会长久保存, 可随时修改):</View>
         <AtTextarea className='input-item'
           maxLength={200}
           value={this.state.commPeople}
@@ -75,6 +76,7 @@ export default class CommBadge extends Component {
           placeholder='请输入回向的人'
         />
         <AtButton className='input-item fix-size-button' type='primary' onClick={this.handleClick.bind(this)}>提交</AtButton>
+        <View style='height:1.2rem'></View>
       </View>
     )
   }
