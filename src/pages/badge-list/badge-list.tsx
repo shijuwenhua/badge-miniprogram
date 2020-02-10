@@ -66,6 +66,9 @@ export default class BadgeList extends Component {
       url: '../badge-detail/badge-detail?badge_id='+ data.id
     })
   }
+  parseDesc(desc){
+    return desc.includes("{") ? JSON.parse(desc)[0].text : desc
+  }
 
   render () {
     const {badges} = this.state
@@ -88,8 +91,8 @@ export default class BadgeList extends Component {
             {processing_badges.map((badge) => (
               <AtListItem 
                 key={badge.id}
-                title={badge.title}
-                note={badge.description.includes("{") ? JSON.parse(badge.description)[0].text : badge.description}
+                title={this.parseDesc(badge.title)}
+                note={this.parseDesc(badge.description)}
                 arrow='right'
                 thumb={badge.icon}
                 onClick={this.handleClick.bind(this,badge)}

@@ -58,7 +58,6 @@ export default class BadgeDetail extends Component {
       })
     } else{
       let { activity_id, is_comm } = this.$router.params
-      debugger;
       if (scene){    
         let obj = {}, arr = decodeURIComponent(scene).split('&');
         for (let i = 0; i < arr.length; i++) {
@@ -68,7 +67,7 @@ export default class BadgeDetail extends Component {
         activity_id = obj['activity_id'];
         is_comm = obj['is_comm'];
       }
-      this.handlePunch(activity_id, is_comm === 'true' ? 0 : 1, '');
+      this.handlePunch(activity_id, is_comm === 'true' ? 0 : 1);
     }
   }
 
@@ -96,9 +95,9 @@ export default class BadgeDetail extends Component {
     }
   }
 
-  handlePunch(activity_id, num, comments, showResult=false){ 
+  handlePunch(activity_id, num, comments=null, showResult=false) { 
     const user_id = this.getUserId();
-    request.get(`attendActivityReutrnBadgeDetail/${user_id}/${activity_id}/${num}?comments=${comments}`).then(res => {
+    request.get(`attendActivityReutrnBadgeDetail/${user_id}/${activity_id}/${num}${comments?'?comments='+comments:''}`).then(res => {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           badge: res.data,
@@ -184,12 +183,16 @@ export default class BadgeDetail extends Component {
       <View className='panel nopa'>
         <View className='avatar-panel' id='badge-panel'>
           <View>
-            <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
-            <View className='at-article__h2'>{badge.title}</View>
-            {commBadge ?
-              <Image style='width:90%' src={badge.userActivityList[0].icon} mode='aspectFit' lazyLoad></Image>
-              :
-              ''
+            {!commBadge ?
+              <View>
+                <Badge complete={badge.status} size="large" image={badge.icon}></Badge>
+                <View className='at-article__h2'>{badge.title}</View>
+              </View>
+            :
+              <View>
+                <Description description={badge.title}></Description>
+                <Image style='width:90%' src={badge.userActivityList[0].icon} mode='aspectFit' lazyLoad></Image>
+              </View>
             }
             <Description description={badge.description}></Description>
             {badge.status === status.COMPLETE?

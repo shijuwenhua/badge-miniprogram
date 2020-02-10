@@ -70,7 +70,7 @@ export default class BadgeDetail extends Component {
   handlePunch(){
     const { activity } = this.state
     const user_id = this.getUserId();
-    request.get(`attendActivityReutrnActivityDetail/${user_id}/${activity.id}/1?comments=`).then(res => {
+    request.get(`attendActivityReutrnActivityDetail/${user_id}/${activity.id}/1`).then(res => {
       if ( res.data && res.data.hasOwnProperty("id") ) {
         this.setState({
           activity: res.data,
