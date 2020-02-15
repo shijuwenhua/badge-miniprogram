@@ -71,7 +71,6 @@ export default class PunchList extends Component {
     const {activities} = this.state
     return (
       <View className='index'>
-        <Helper/>
         <View className='panel'>
           <View className='panel__title'>打卡进行中...</View>
           <View className='panel__content no-padding'>

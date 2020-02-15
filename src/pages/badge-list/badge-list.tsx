@@ -76,7 +76,6 @@ export default class BadgeList extends Component {
     const processing_badges = badges.filter( badge => badge.status === status.PROCESSING)
     return (
       <View className='index'>
-        <Helper/>
         <View className='panel'>
           <View className='panel__title'>已获得徽章</View>
           <View className='panel__content no-padding'>

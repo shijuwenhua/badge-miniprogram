@@ -104,9 +104,9 @@ export default class BadgeDetail extends Component {
           new_activity: activity_id
         });
         if(showResult) {
-          let content = res.data.title.match(/[万|亿](.*)万人共修/);
+          let content = res.data.title.match(/[万|亿](.*)万人共/);
           content = (content && content.length == 2) ? content[1] : res.data.title;
-          const msg = `您本次完成${num}遍${content}, \r\n您总共完成${res.data.userActivityList[0].attendTimes}遍, \r\n感恩随喜您的功德。`
+          const msg = `您本次完成${num}遍${content}, \r\n您总共完成${res.data.userActivityList[0].attendTimes}遍。`
           Taro.showModal ({
             title: '消息',
             content: msg

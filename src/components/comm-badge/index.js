@@ -68,12 +68,11 @@ export default class CommBadge extends Component {
           error={errorStatus}
           //onErrorClick={this.handleErrorInfo.bind(this)}
         />
-        <View className='at-article__h3'>回向给(回向名单会长久保存, 可随时修改):</View>
+        <View className='at-article__h3'>备注:</View>
         <AtTextarea className='input-item'
           maxLength={200}
           value={this.state.commPeople}
           onChange={this.handleInputChange.bind(this, 'commPeople')}
-          placeholder='在世人：某某，某某\r\n亡人：某某，某某\r\n堕胎婴灵：某某的堕胎婴灵'
         />
         <AtButton className='input-item fix-size-button' type='primary' onClick={this.handleClick.bind(this)}>提交</AtButton>
         <View style='height:1.2rem'></View>
